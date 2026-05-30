@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true">
       <el-form-item label="公告标题" prop="noticeTitle">
-        <el-input v-model="queryParams.noticeTitle" placeholder="请输入公告标题" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.noticeTitle" placeholder="请输入公告标�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="操作人员" prop="createBy">
-        <el-input v-model="queryParams.createBy" placeholder="请输入操作人员" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.createBy" placeholder="请输入操作人�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="类型" prop="noticeType">
         <el-select v-model="queryParams.noticeType" placeholder="请选择类型" clearable>
@@ -41,12 +41,12 @@
           <el-tag :type="scope.row.noticeType === 1 ? 'success' : 'warning'">{{ scope.row.noticeType === 1 ? '通知' : '公告' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="状态" width="80">
+      <el-table-column prop="status" label="状�? width="80">
         <template #default="scope">
           <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">{{ scope.row.status === 0 ? '正常' : '关闭' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createBy" label="创建者" width="120" />
+      <el-table-column prop="createBy" label="创建�? width="120" />
       <el-table-column prop="createdAt" label="创建时间" width="160" />
       <el-table-column label="操作" width="150">
         <template #default="scope">
@@ -61,7 +61,7 @@
     <el-dialog :title="dialogTitle" v-model="dialogVisible" width="600px">
       <el-form ref="noticeRef" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="公告标题" prop="noticeTitle">
-          <el-input v-model="form.noticeTitle" placeholder="请输入公告标题" />
+          <el-input v-model="form.noticeTitle" placeholder="请输入公告标�? />
         </el-form-item>
         <el-form-item label="类型" prop="noticeType">
           <el-radio-group v-model="form.noticeType">
@@ -69,14 +69,14 @@
             <el-radio :value="2">公告</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item label="状�?>
           <el-radio-group v-model="form.status">
             <el-radio :value="0">正常</el-radio>
             <el-radio :value="1">关闭</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="内容" prop="noticeContent">
-          <el-input v-model="form.noticeContent" type="textarea" :rows="5" placeholder="请输入内容" />
+          <el-input v-model="form.noticeContent" type="textarea" :rows="5" placeholder="请输入内�? />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -89,8 +89,8 @@
       <el-descriptions :column="1" border>
         <el-descriptions-item label="公告标题">{{ viewData.noticeTitle }}</el-descriptions-item>
         <el-descriptions-item label="类型">{{ viewData.noticeType === 1 ? '通知' : '公告' }}</el-descriptions-item>
-        <el-descriptions-item label="状态">{{ viewData.status === 0 ? '正常' : '关闭' }}</el-descriptions-item>
-        <el-descriptions-item label="创建者">{{ viewData.createBy }}</el-descriptions-item>
+        <el-descriptions-item label="状�?>{{ viewData.status === 0 ? '正常' : '关闭' }}</el-descriptions-item>
+        <el-descriptions-item label="创建�?>{{ viewData.createBy }}</el-descriptions-item>
         <el-descriptions-item label="创建时间">{{ viewData.createdAt }}</el-descriptions-item>
         <el-descriptions-item label="内容">{{ viewData.noticeContent }}</el-descriptions-item>
       </el-descriptions>
@@ -107,7 +107,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { listNotice, getNotice, addNotice, updateNotice, deleteNotice } from '@/api/system';
 
 const loading = ref(false);
-const noticeList = ref([]);
+const noticeList = ref<any[]>([]);
 const total = ref(0);
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
@@ -119,9 +119,9 @@ const ids = ref<number[]>([]);
 const queryParams = reactive({ pageNum: 1, pageSize: 10, noticeTitle: '', createBy: '', noticeType: undefined as number | undefined });
 const form = reactive({ id: undefined as number | undefined, noticeTitle: '', noticeType: 1, noticeContent: '', status: 0 });
 const rules = {
-  noticeTitle: [{ required: true, message: '请输入公告标题', trigger: 'blur' }],
+  noticeTitle: [{ required: true, message: '请输入公告标�?, trigger: 'blur' }],
   noticeType: [{ required: true, message: '请选择类型', trigger: 'change' }],
-  noticeContent: [{ required: true, message: '请输入内容', trigger: 'blur' }],
+  noticeContent: [{ required: true, message: '请输入内�?, trigger: 'blur' }],
 };
 
 const getList = async () => {
@@ -161,7 +161,7 @@ const handleView = (row: any) => {
 
 const handleDelete = (row?: any) => {
   const noticeIds = row ? [row.id] : ids.value;
-  ElMessageBox.confirm('确认删除选中的公告?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除选中的公�?', '提示', { type: 'warning' }).then(async () => {
     await deleteNotice(noticeIds);
     ElMessage.success('删除成功');
     getList();

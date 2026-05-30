@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true">
       <el-form-item label="岗位名称" prop="postName">
-        <el-input v-model="queryParams.postName" placeholder="请输入岗位名称" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.postName" placeholder="请输入岗位名�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="岗位编码" prop="postCode">
-        <el-input v-model="queryParams.postCode" placeholder="请输入岗位编码" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.postCode" placeholder="请输入岗位编�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleQuery">搜索</el-button>
@@ -28,7 +28,7 @@
       <el-table-column prop="postCode" label="岗位编码" width="150" />
       <el-table-column prop="postName" label="岗位名称" width="150" />
       <el-table-column prop="sort" label="排序" width="80" />
-      <el-table-column prop="status" label="状态" width="80">
+      <el-table-column prop="status" label="状�? width="80">
         <template #default="scope">
           <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">{{ scope.row.status === 0 ? '正常' : '停用' }}</el-tag>
         </template>
@@ -47,22 +47,22 @@
     <el-dialog :title="dialogTitle" v-model="dialogVisible" width="500px">
       <el-form ref="postRef" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="岗位名称" prop="postName">
-          <el-input v-model="form.postName" placeholder="请输入岗位名称" />
+          <el-input v-model="form.postName" placeholder="请输入岗位名�? />
         </el-form-item>
         <el-form-item label="岗位编码" prop="postCode">
-          <el-input v-model="form.postCode" placeholder="请输入岗位编码" />
+          <el-input v-model="form.postCode" placeholder="请输入岗位编�? />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input-number v-model="form.sort" :min="0" />
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item label="状�?>
           <el-radio-group v-model="form.status">
             <el-radio :value="0">正常</el-radio>
             <el-radio :value="1">停用</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入备�? />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -79,7 +79,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { listPost, getPost, addPost, updatePost, deletePost } from '@/api/system';
 
 const loading = ref(false);
-const postList = ref([]);
+const postList = ref<any[]>([]);
 const total = ref(0);
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
@@ -89,8 +89,8 @@ const ids = ref<number[]>([]);
 const queryParams = reactive({ pageNum: 1, pageSize: 10, postName: '', postCode: '' });
 const form = reactive({ id: undefined as number | undefined, postName: '', postCode: '', sort: 0, status: 0, remark: '' });
 const rules = {
-  postName: [{ required: true, message: '请输入岗位名称', trigger: 'blur' }],
-  postCode: [{ required: true, message: '请输入岗位编码', trigger: 'blur' }],
+  postName: [{ required: true, message: '请输入岗位名�?, trigger: 'blur' }],
+  postCode: [{ required: true, message: '请输入岗位编�?, trigger: 'blur' }],
 };
 
 const getList = async () => {
@@ -125,7 +125,7 @@ const handleUpdate = async (row: any) => {
 
 const handleDelete = (row?: any) => {
   const postIds = row ? [row.id] : ids.value;
-  ElMessageBox.confirm('确认删除选中的岗位?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除选中的岗�?', '提示', { type: 'warning' }).then(async () => {
     await deletePost(postIds);
     ElMessage.success('删除成功');
     getList();

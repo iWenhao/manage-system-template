@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" :inline="true">
       <el-form-item label="部门名称">
-        <el-input v-model="queryParams.deptName" placeholder="请输入部门名称" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.deptName" placeholder="请输入部门名�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleQuery">搜索</el-button>
@@ -19,10 +19,10 @@
     <el-table v-loading="loading" :data="deptList" row-key="id" :tree-props="{ children: 'children' }" default-expand-all>
       <el-table-column prop="name" label="部门名称" width="200" />
       <el-table-column prop="sort" label="排序" width="80" />
-      <el-table-column prop="leader" label="负责人" width="120" />
+      <el-table-column prop="leader" label="负责�? width="120" />
       <el-table-column prop="phone" label="联系电话" width="120" />
       <el-table-column prop="email" label="邮箱" width="150" />
-      <el-table-column prop="status" label="状态" width="80">
+      <el-table-column prop="status" label="状�? width="80">
         <template #default="scope">
           <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">{{ scope.row.status === 0 ? '正常' : '停用' }}</el-tag>
         </template>
@@ -47,7 +47,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="部门名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入部门名称" />
+              <el-input v-model="form.name" placeholder="请输入部门名�? />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -56,22 +56,22 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="负责人">
+            <el-form-item label="负责�?>
               <el-input v-model="form.leader" placeholder="请输入负责人" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="联系电话">
-              <el-input v-model="form.phone" placeholder="请输入联系电话" />
+              <el-input v-model="form.phone" placeholder="请输入联系电�? />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="邮箱">
-              <el-input v-model="form.email" placeholder="请输入邮箱" />
+              <el-input v-model="form.email" placeholder="请输入邮�? />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态">
+            <el-form-item label="状�?>
               <el-radio-group v-model="form.status">
                 <el-radio :value="0">正常</el-radio>
                 <el-radio :value="1">停用</el-radio>
@@ -94,7 +94,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { listDept, getDept, addDept, updateDept, deleteDept } from '@/api/system';
 
 const loading = ref(false);
-const deptList = ref([]);
+const deptList = ref<any[]>([]);
 const deptTreeOptions = ref([]);
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
@@ -111,7 +111,7 @@ const form = reactive({
   status: 0,
 });
 const rules = {
-  name: [{ required: true, message: '请输入部门名称', trigger: 'blur' }],
+  name: [{ required: true, message: '请输入部门名�?, trigger: 'blur' }],
 };
 
 const getList = async () => {
@@ -119,7 +119,7 @@ const getList = async () => {
   try {
     const res: any = await listDept(queryParams);
     deptList.value = res.data;
-    deptTreeOptions.value = [{ id: 0, name: '主类目', children: res.data }];
+    deptTreeOptions.value = [{ id: 0, name: '主类�?, children: res.data }];
   } finally { loading.value = false; }
 };
 
@@ -140,7 +140,7 @@ const handleUpdate = async (row: any) => {
 };
 
 const handleDelete = (row: any) => {
-  ElMessageBox.confirm('确认删除该部门?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除该部�?', '提示', { type: 'warning' }).then(async () => {
     await deleteDept(row.id);
     ElMessage.success('删除成功');
     getList();

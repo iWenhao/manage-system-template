@@ -70,6 +70,9 @@ export function getUserMenus() {
 export function listDept(params?: any) {
   return request({ url: '/api/dept/list', method: 'get', params });
 }
+export function getDept(id: number) {
+  return request({ url: `/api/dept/${id}`, method: 'get' });
+}
 export function getDeptTree() {
   return request({ url: '/api/dept/tree', method: 'get' });
 }
@@ -87,6 +90,9 @@ export function deleteDept(id: number) {
 export function listPost(params: any) {
   return request({ url: '/api/post/list', method: 'get', params });
 }
+export function getPost(id: number) {
+  return request({ url: `/api/post/${id}`, method: 'get' });
+}
 export function addPost(data: any) {
   return request({ url: '/api/post', method: 'post', data });
 }
@@ -101,6 +107,9 @@ export function deletePost(id: number) {
 export function listDictType(params: any) {
   return request({ url: '/api/dict/type/list', method: 'get', params });
 }
+export function getDictType(id: number) {
+  return request({ url: `/api/dict/type/${id}`, method: 'get' });
+}
 export function addDictType(data: any) {
   return request({ url: '/api/dict/type', method: 'post', data });
 }
@@ -112,6 +121,9 @@ export function deleteDictType(id: number) {
 }
 export function listDictData(params: any) {
   return request({ url: '/api/dict/data/list', method: 'get', params });
+}
+export function getDictData(id: number) {
+  return request({ url: `/api/dict/data/${id}`, method: 'get' });
 }
 export function addDictData(data: any) {
   return request({ url: '/api/dict/data', method: 'post', data });
@@ -127,6 +139,9 @@ export function deleteDictData(id: number) {
 export function listConfig(params: any) {
   return request({ url: '/api/config/list', method: 'get', params });
 }
+export function getConfig(id: number) {
+  return request({ url: `/api/config/${id}`, method: 'get' });
+}
 export function addConfig(data: any) {
   return request({ url: '/api/config', method: 'post', data });
 }
@@ -140,6 +155,9 @@ export function deleteConfig(id: number) {
 // 通知公告
 export function listNotice(params: any) {
   return request({ url: '/api/notice/list', method: 'get', params });
+}
+export function getNotice(id: number) {
+  return request({ url: `/api/notice/${id}`, method: 'get' });
 }
 export function addNotice(data: any) {
   return request({ url: '/api/notice', method: 'post', data });

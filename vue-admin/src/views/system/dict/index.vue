@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true">
       <el-form-item label="字典名称" prop="dictName">
-        <el-input v-model="queryParams.dictName" placeholder="请输入字典名称" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.dictName" placeholder="请输入字典名�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="字典类型" prop="dictType">
-        <el-input v-model="queryParams.dictType" placeholder="请输入字典类型" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.dictType" placeholder="请输入字典类�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleQuery">搜索</el-button>
@@ -27,7 +27,7 @@
           <el-link type="primary" @click="handleDictData(scope.row)">{{ scope.row.dictType }}</el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="状态" width="80">
+      <el-table-column prop="status" label="状�? width="80">
         <template #default="scope">
           <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">{{ scope.row.status === 0 ? '正常' : '停用' }}</el-tag>
         </template>
@@ -48,19 +48,19 @@
     <el-dialog :title="dialogTitle" v-model="dialogVisible" width="500px">
       <el-form ref="dictRef" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="字典名称" prop="dictName">
-          <el-input v-model="form.dictName" placeholder="请输入字典名称" />
+          <el-input v-model="form.dictName" placeholder="请输入字典名�? />
         </el-form-item>
         <el-form-item label="字典类型" prop="dictType">
-          <el-input v-model="form.dictType" placeholder="请输入字典类型" />
+          <el-input v-model="form.dictType" placeholder="请输入字典类�? />
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item label="状�?>
           <el-radio-group v-model="form.status">
             <el-radio :value="0">正常</el-radio>
             <el-radio :value="1">停用</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入备�? />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -78,9 +78,9 @@
       <el-table v-loading="dataLoading" :data="dictDataList">
         <el-table-column type="index" width="50" />
         <el-table-column prop="dictLabel" label="字典标签" width="150" />
-        <el-table-column prop="dictValue" label="字典键值" width="120" />
+        <el-table-column prop="dictValue" label="字典键�? width="120" />
         <el-table-column prop="sort" label="排序" width="80" />
-        <el-table-column prop="status" label="状态" width="80">
+        <el-table-column prop="status" label="状�? width="80">
           <template #default="scope">
             <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">{{ scope.row.status === 0 ? '正常' : '停用' }}</el-tag>
           </template>
@@ -97,22 +97,22 @@
     <el-dialog :title="dataDialogTitle" v-model="dataDialogVisible" width="500px">
       <el-form ref="dataRef" :model="dataForm" :rules="dataRules" label-width="100px">
         <el-form-item label="字典标签" prop="dictLabel">
-          <el-input v-model="dataForm.dictLabel" placeholder="请输入字典标签" />
+          <el-input v-model="dataForm.dictLabel" placeholder="请输入字典标�? />
         </el-form-item>
-        <el-form-item label="字典键值" prop="dictValue">
-          <el-input v-model="dataForm.dictValue" placeholder="请输入字典键值" />
+        <el-form-item label="字典键�? prop="dictValue">
+          <el-input v-model="dataForm.dictValue" placeholder="请输入字典键�? />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input-number v-model="dataForm.sort" :min="0" />
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item label="状�?>
           <el-radio-group v-model="dataForm.status">
             <el-radio :value="0">正常</el-radio>
             <el-radio :value="1">停用</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注">
-          <el-input v-model="dataForm.remark" type="textarea" placeholder="请输入备注" />
+          <el-input v-model="dataForm.remark" type="textarea" placeholder="请输入备�? />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -129,13 +129,13 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { listDictType, getDictType, addDictType, updateDictType, deleteDictType, listDictData, getDictData, addDictData, updateDictData, deleteDictData } from '@/api/system';
 
 const loading = ref(false);
-const dictList = ref([]);
+const dictList = ref<any[]>([]);
 const total = ref(0);
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dictDataVisible = ref(false);
 const dataLoading = ref(false);
-const dictDataList = ref([]);
+const dictDataList = ref<any[]>([]);
 const dataDialogVisible = ref(false);
 const dataDialogTitle = ref('');
 const currentDictType = ref('');
@@ -143,14 +143,14 @@ const currentDictType = ref('');
 const queryParams = reactive({ pageNum: 1, pageSize: 10, dictName: '', dictType: '' });
 const form = reactive({ id: undefined as number | undefined, dictName: '', dictType: '', status: 0, remark: '' });
 const rules = {
-  dictName: [{ required: true, message: '请输入字典名称', trigger: 'blur' }],
-  dictType: [{ required: true, message: '请输入字典类型', trigger: 'blur' }],
+  dictName: [{ required: true, message: '请输入字典名�?, trigger: 'blur' }],
+  dictType: [{ required: true, message: '请输入字典类�?, trigger: 'blur' }],
 };
 
 const dataForm = reactive({ id: undefined as number | undefined, dictType: '', dictLabel: '', dictValue: '', sort: 0, status: 0, remark: '' });
 const dataRules = {
-  dictLabel: [{ required: true, message: '请输入字典标签', trigger: 'blur' }],
-  dictValue: [{ required: true, message: '请输入字典键值', trigger: 'blur' }],
+  dictLabel: [{ required: true, message: '请输入字典标�?, trigger: 'blur' }],
+  dictValue: [{ required: true, message: '请输入字典键�?, trigger: 'blur' }],
 };
 
 const getList = async () => {
@@ -179,7 +179,7 @@ const handleUpdate = async (row: any) => {
 };
 
 const handleDelete = (row: any) => {
-  ElMessageBox.confirm('确认删除该字典类型?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除该字典类�?', '提示', { type: 'warning' }).then(async () => {
     await deleteDictType(row.id);
     ElMessage.success('删除成功');
     getList();
@@ -226,7 +226,7 @@ const handleUpdateData = async (row: any) => {
 };
 
 const handleDeleteData = (row: any) => {
-  ElMessageBox.confirm('确认删除该字典数据?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除该字典数�?', '提示', { type: 'warning' }).then(async () => {
     await deleteDictData(row.id);
     ElMessage.success('删除成功');
     getDictDataList();

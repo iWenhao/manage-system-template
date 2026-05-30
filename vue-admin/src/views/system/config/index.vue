@@ -80,7 +80,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { listConfig, getConfig, addConfig, updateConfig, deleteConfig } from '@/api/system';
 
 const loading = ref(false);
-const configList = ref([]);
+const configList = ref<any[]>([]);
 const total = ref(0);
 const dialogVisible = ref(false);
 const dialogTitle = ref('');

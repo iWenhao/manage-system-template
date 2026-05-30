@@ -4,7 +4,7 @@
       <router-link
         v-for="tag in tagsStore.visitedViews"
         :key="tag.path"
-        :to="{ path: tag.path, query: tag.query, params: tag.params }"
+        :to="tag.path"
         :class="['tags-view-item', { active: isActive(tag) }]"
         @contextmenu.prevent="openMenu(tag, $event)"
       >

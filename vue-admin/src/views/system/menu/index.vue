@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" :inline="true">
       <el-form-item label="菜单名称">
-        <el-input v-model="queryParams.menuName" placeholder="请输入菜单名称" @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.menuName" placeholder="请输入菜单名�? @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleQuery">搜索</el-button>
@@ -34,7 +34,7 @@
       <el-table-column prop="path" label="路由路径" width="150" />
       <el-table-column prop="component" label="组件路径" width="200" />
       <el-table-column prop="permission" label="权限标识" width="150" />
-      <el-table-column prop="status" label="状态" width="80">
+      <el-table-column prop="status" label="状�? width="80">
         <template #default="scope">
           <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">{{ scope.row.status === 0 ? '正常' : '停用' }}</el-tag>
         </template>
@@ -67,22 +67,22 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入菜单名称" />
+              <el-input v-model="form.name" placeholder="请输入菜单名�? />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.type !== 2">
             <el-form-item label="路由路径">
-              <el-input v-model="form.path" placeholder="请输入路由路径" />
+              <el-input v-model="form.path" placeholder="请输入路由路�? />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.type === 1">
             <el-form-item label="组件路径">
-              <el-input v-model="form.component" placeholder="请输入组件路径" />
+              <el-input v-model="form.component" placeholder="请输入组件路�? />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.type !== 0">
             <el-form-item label="权限标识">
-              <el-input v-model="form.permission" placeholder="请输入权限标识" />
+              <el-input v-model="form.permission" placeholder="请输入权限标�? />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -92,11 +92,11 @@
           </el-col>
           <el-col :span="12" v-if="form.type !== 2">
             <el-form-item label="图标">
-              <el-input v-model="form.icon" placeholder="请输入图标名称" />
+              <el-input v-model="form.icon" placeholder="请输入图标名�? />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态">
+            <el-form-item label="状�?>
               <el-radio-group v-model="form.status">
                 <el-radio :value="0">正常</el-radio>
                 <el-radio :value="1">停用</el-radio>
@@ -119,7 +119,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { listMenu, getMenu, addMenu, updateMenu, deleteMenu } from '@/api/system';
 
 const loading = ref(false);
-const menuList = ref([]);
+const menuList = ref<any[]>([]);
 const menuTreeOptions = ref([]);
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
@@ -139,7 +139,7 @@ const form = reactive({
   status: 0,
 });
 const rules = {
-  name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
+  name: [{ required: true, message: '请输入菜单名�?, trigger: 'blur' }],
   type: [{ required: true, message: '请选择菜单类型', trigger: 'change' }],
 };
 
@@ -148,7 +148,7 @@ const getList = async () => {
   try {
     const res: any = await listMenu(queryParams);
     menuList.value = res.data;
-    menuTreeOptions.value = [{ id: 0, name: '主类目', children: res.data }];
+    menuTreeOptions.value = [{ id: 0, name: '主类�?, children: res.data }];
   } finally { loading.value = false; }
 };
 
@@ -169,7 +169,7 @@ const handleUpdate = async (row: any) => {
 };
 
 const handleDelete = (row: any) => {
-  ElMessageBox.confirm('确认删除该菜单?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除该菜�?', '提示', { type: 'warning' }).then(async () => {
     await deleteMenu(row.id);
     ElMessage.success('删除成功');
     getList();
