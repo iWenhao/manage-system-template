@@ -1,0 +1,46 @@
+{
+  "common": {
+    "search": "Search",
+    "reset": "Reset",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "export": "Export",
+    "import": "Import",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "success": "Success",
+    "failed": "Failed",
+    "tip": "Tip",
+    "deleteConfirm": "Are you sure to delete?"
+  },
+  "login": {
+    "title": "Admin Pro",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "usernamePlaceholder": "Please enter username",
+    "passwordPlaceholder": "Please enter password"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "system": "System",
+    "user": "User",
+    "role": "Role",
+    "menu": "Menu",
+    "dept": "Department",
+    "post": "Post",
+    "dict": "Dictionary",
+    "config": "Config",
+    "notice": "Notice",
+    "monitor": "Monitor",
+    "online": "Online",
+    "server": "Server",
+    "operlog": "Operation Log",
+    "loginlog": "Login Log",
+    "tool": "Tools",
+    "job": "Job",
+    "gen": "Code Gen"
+  }
+}

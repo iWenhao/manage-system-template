@@ -1,0 +1,389 @@
+// Admin Pro - Prisma Schema
+// PostgreSQL 数据库模型
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== 部门表 ====================
+model SysDept {
+  id        Int       @id @default(autoincrement())
+  parentId  Int       @default(0) @map("parent_id")
+  name      String    @db.VarChar(100)
+  sort      Int       @default(0)
+  leader    String?   @db.VarChar(50)
+  phone     String?   @db.VarChar(20)
+  email     String?   @db.VarChar(100)
+  status    Int       @default(0)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  children SysDept[] @relation("DeptTree")
+  parent   SysDept?  @relation("DeptTree", fields: [parentId], references: [id])
+  users    SysUser[]
+
+  @@map("sys_dept")
+}
+
+// ==================== 用户表 ====================
+model SysUser {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique @db.VarChar(50)
+  password  String    @db.VarChar(200)
+  nickname  String    @db.VarChar(50)
+  email     String?   @db.VarChar(100)
+  phone     String?   @db.VarChar(20)
+  avatar    String?   @db.VarChar(500)
+  sex       Int?      @default(0)
+  status    Int       @default(0)
+  deptId    Int?      @map("dept_id")
+  remark    String?   @db.VarChar(500)
+  loginIp   String?   @db.VarChar(50) @map("login_ip")
+  loginDate DateTime? @map("login_date")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  dept      SysDept?      @relation(fields: [deptId], references: [id])
+  roles     SysUserRole[]
+  posts     SysUserPost[]
+  operLogs  SysOperLog[]
+  oauthTokens OAuthToken[]
+  oauthCodes  OAuthCode[]
+
+  @@map("sys_user")
+}
+
+// ==================== 角色表 ====================
+model SysRole {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(50)
+  code       String    @unique @db.VarChar(50)
+  sort       Int       @default(0)
+  status     Int       @default(0)
+  dataScope  Int       @default(1) @map("data_scope")
+  remark     String?   @db.VarChar(500)
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  users SysUserRole[]
+  menus SysRoleMenu[]
+
+  @@map("sys_role")
+}
+
+// ==================== 菜单表 ====================
+model SysMenu {
+  id         Int       @id @default(autoincrement())
+  parentId   Int       @default(0) @map("parent_id")
+  name       String    @db.VarChar(50)
+  path       String?   @db.VarChar(200)
+  component  String?   @db.VarChar(200)
+  icon       String?   @db.VarChar(100)
+  sort       Int       @default(0)
+  type       Int
+  permission String?   @db.VarChar(100)
+  visible    Int       @default(0)
+  status     Int       @default(0)
+  isExternal Boolean   @default(false) @map("is_external")
+  isCache    Boolean   @default(false) @map("is_cache")
+  remark     String?   @db.VarChar(500)
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  children SysMenu[] @relation("MenuTree")
+  parent   SysMenu?  @relation("MenuTree", fields: [parentId], references: [id])
+  roles    SysRoleMenu[]
+
+  @@map("sys_menu")
+}
+
+// ==================== 岗位表 ====================
+model SysPost {
+  id        Int       @id @default(autoincrement())
+  code      String    @unique @db.VarChar(50)
+  name      String    @db.VarChar(50)
+  sort      Int       @default(0)
+  status    Int       @default(0)
+  remark    String?   @db.VarChar(500)
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  users SysUserPost[]
+
+  @@map("sys_post")
+}
+
+// ==================== 字典类型表 ====================
+model SysDictType {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100)
+  status    Int       @default(0)
+  remark    String?   @db.VarChar(500)
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  data SysDictData[]
+
+  @@map("sys_dict_type")
+}
+
+// ==================== 字典数据表 ====================
+model SysDictData {
+  id         Int       @id @default(autoincrement())
+  dictTypeId Int       @map("dict_type_id")
+  label      String    @db.VarChar(100)
+  value      String    @db.VarChar(100)
+  sort       Int       @default(0)
+  status     Int       @default(0)
+  remark     String?   @db.VarChar(500)
+
+  dictType SysDictType @relation(fields: [dictTypeId], references: [id])
+
+  @@map("sys_dict_data")
+}
+
+// ==================== 参数配置表 ====================
+model SysConfig {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100)
+  key       String    @unique @db.VarChar(100)
+  value     String    @db.VarChar(500)
+  type      String?   @db.VarChar(50)
+  remark    String?   @db.VarChar(500)
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@map("sys_config")
+}
+
+// ==================== 通知公告表 ====================
+model SysNotice {
+  id        Int       @id @default(autoincrement())
+  title     String    @db.VarChar(200)
+  type      Int
+  content   String?
+  status    Int       @default(0)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@map("sys_notice")
+}
+
+// ==================== 操作日志表 ====================
+model SysOperLog {
+  id            Int       @id @default(autoincrement())
+  title         String?   @db.VarChar(100)
+  method        String?   @db.VarChar(200)
+  requestMethod String?   @db.VarChar(10) @map("request_method")
+  url           String?   @db.VarChar(500)
+  ip            String?   @db.VarChar(50)
+  operName      String?   @db.VarChar(50) @map("oper_name")
+  userId        Int?      @map("user_id")
+  status        Int?      @default(0)
+  errorMsg      String?   @db.VarChar(2000) @map("error_msg")
+  operTime      DateTime  @default(now()) @map("oper_time")
+
+  user SysUser? @relation(fields: [userId], references: [id])
+
+  @@map("sys_oper_log")
+}
+
+// ==================== 登录日志表 ====================
+model SysLoginLog {
+  id        Int       @id @default(autoincrement())
+  username  String?   @db.VarChar(50)
+  ip        String?   @db.VarChar(50)
+  status    Int?      @default(0)
+  msg       String?   @db.VarChar(200)
+  loginTime DateTime  @default(now()) @map("login_time")
+
+  @@map("sys_login_log")
+}
+
+// ==================== 定时任务表 ====================
+model SysJob {
+  id             Int       @id @default(autoincrement())
+  name           String    @db.VarChar(100)
+  jobGroup       String    @default("DEFAULT") @map("job_group")
+  invokeTarget   String    @db.VarChar(500) @map("invoke_target")
+  cronExpression String    @db.VarChar(100) @map("cron_expression")
+  misfirePolicy  Int       @default(1) @map("misfire_policy")
+  concurrent     Int       @default(1)
+  status         Int       @default(0)
+  remark         String?   @db.VarChar(500)
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  logs SysJobLog[]
+
+  @@map("sys_job")
+}
+
+// ==================== 定时任务日志表 ====================
+model SysJobLog {
+  id            Int       @id @default(autoincrement())
+  jobId         Int       @map("job_id")
+  jobName       String    @db.VarChar(100)
+  invokeTarget  String    @db.VarChar(500) @map("invoke_target")
+  jobMessage    String?   @db.VarChar(500) @map("job_message")
+  status        Int?      @default(0)
+  exceptionInfo String?   @map("exception_info")
+  startTime     DateTime? @map("start_time")
+  stopTime      DateTime? @map("stop_time")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  job SysJob @relation(fields: [jobId], references: [id])
+
+  @@map("sys_job_log")
+}
+
+// ==================== 用户角色关联表 ====================
+model SysUserRole {
+  userId Int @map("user_id")
+  roleId Int @map("role_id")
+
+  user SysUser @relation(fields: [userId], references: [id])
+  role SysRole @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+  @@map("sys_user_role")
+}
+
+// ==================== 角色菜单关联表 ====================
+model SysRoleMenu {
+  roleId Int @map("role_id")
+  menuId Int @map("menu_id")
+
+  role SysRole @relation(fields: [roleId], references: [id])
+  menu SysMenu @relation(fields: [menuId], references: [id])
+
+  @@id([roleId, menuId])
+  @@map("sys_role_menu")
+}
+
+// ==================== 用户岗位关联表 ====================
+model SysUserPost {
+  userId Int @map("user_id")
+  postId Int @map("post_id")
+
+  user SysUser @relation(fields: [userId], references: [id])
+  post SysPost @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
+  @@map("sys_user_post")
+}
+
+// ==================== OAuth 客户端表 ====================
+model OAuthClient {
+  id           Int       @id @default(autoincrement())
+  clientId     String    @unique @map("client_id") @db.VarChar(100)
+  clientSecret String    @map("client_secret") @db.VarChar(200)
+  name         String    @db.VarChar(100)
+  redirectUri  String    @map("redirect_uri") @db.VarChar(500)
+  scope        String?   @db.VarChar(200)
+  status       Int       @default(0)
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  tokens OAuthToken[]
+  codes  OAuthCode[]
+
+  @@map("oauth_client")
+}
+
+// ==================== OAuth Token 表 ====================
+model OAuthToken {
+  id           Int       @id @default(autoincrement())
+  accessToken  String    @unique @map("access_token") @db.VarChar(500)
+  refreshToken String?   @map("refresh_token") @db.VarChar(500)
+  clientId     Int       @map("client_id")
+  userId       Int       @map("user_id")
+  scope        String?   @db.VarChar(200)
+  expiresAt    DateTime  @map("expires_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  client OAuthClient @relation(fields: [clientId], references: [id])
+  user   SysUser     @relation(fields: [userId], references: [id])
+
+  @@map("oauth_token")
+}
+
+// ==================== OAuth 授权码表 ====================
+model OAuthCode {
+  id          Int       @id @default(autoincrement())
+  code        String    @unique @db.VarChar(200)
+  clientId    Int       @map("client_id")
+  userId      Int       @map("user_id")
+  redirectUri String    @map("redirect_uri") @db.VarChar(500)
+  scope       String?   @db.VarChar(200)
+  expiresAt   DateTime  @map("expires_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  client OAuthClient @relation(fields: [clientId], references: [id])
+  user   SysUser     @relation(fields: [userId], references: [id])
+
+  @@map("oauth_code")
+}
+
+// ==================== SSO 提供者表 ====================
+model SSOProvider {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(100)
+  type         String    @db.VarChar(50)
+  clientId     String?   @map("client_id") @db.VarChar(200)
+  clientSecret String?   @map("client_secret") @db.VarChar(200)
+  authorizeUrl String?   @map("authorize_url") @db.VarChar(500)
+  tokenUrl     String?   @map("token_url") @db.VarChar(500)
+  userInfoUrl  String?   @map("user_info_url") @db.VarChar(500)
+  scope        String?   @db.VarChar(200)
+  status       Int       @default(0)
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  @@map("sso_provider")
+}
+
+// ==================== 代码生成 - 表信息 ====================
+model GenTable {
+  id             Int       @id @default(autoincrement())
+  tableName      String    @unique @map("table_name") @db.VarChar(200)
+  tableComment   String?   @map("table_comment") @db.VarChar(500)
+  className      String    @map("class_name") @db.VarChar(100)
+  tplCategory    String    @default("crud") @map("tpl_category") @db.VarChar(50)
+  packageName    String?   @map("package_name") @db.VarChar(100)
+  moduleName     String?   @map("module_name") @db.VarChar(100)
+  businessName   String?   @map("business_name") @db.VarChar(100)
+  functionName   String?   @map("function_name") @db.VarChar(200)
+  functionAuthor String?   @map("function_author") @db.VarChar(100)
+  options        String?
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  columns GenTableColumn[]
+
+  @@map("gen_table")
+}
+
+// ==================== 代码生成 - 列信息 ====================
+model GenTableColumn {
+  id             Int       @id @default(autoincrement())
+  tableId        Int       @map("table_id")
+  columnName     String    @map("column_name") @db.VarChar(200)
+  columnComment  String?   @map("column_comment") @db.VarChar(500)
+  columnType     String    @map("column_type") @db.VarChar(100)
+  javaType       String    @map("java_type") @db.VarChar(50)
+  javaField      String    @map("java_field") @db.VarChar(100)
+  isPk           Boolean   @default(false) @map("is_pk")
+  isIncrement    Boolean   @default(false) @map("is_increment")
+  isRequired     Boolean   @default(false) @map("is_required")
+  isInsert       Boolean   @default(false) @map("is_insert")
+  isEdit         Boolean   @default(false) @map("is_edit")
+  isList         Boolean   @default(false) @map("is_list")
+  isQuery        Boolean   @default(false) @map("is_query")
+  queryType      String?   @map("query_type") @db.VarChar(50)
+  htmlType       String?   @map("html_type") @db.VarChar(50)
+  dictType       String?   @map("dict_type") @db.VarChar(100)
+  sort           Int       @default(0)
+
+  table GenTable @relation(fields: [tableId], references: [id])
+
+  @@map("gen_table_column")
+}

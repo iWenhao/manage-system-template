@@ -1,0 +1,41 @@
+{
+  "name": "admin-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Admin Pro - 全栈后台管理系统",
+  "scripts": {
+    "dev:server": "cd server && pnpm dev",
+    "dev:vue": "cd vue-admin && pnpm dev",
+    "dev:next": "cd next-admin && pnpm dev",
+    "dev:docker": "cd docker && docker compose up -d",
+    "build:server": "cd server && pnpm build",
+    "build:vue": "cd vue-admin && pnpm build",
+    "build:next": "cd next-admin && pnpm build",
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "format": "pnpm -r format",
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}

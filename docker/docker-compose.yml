@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: admin-pro-postgres
+    restart: always
+    ports:
+      - '${DB_PORT:-5432}:5432'
+    environment:
+      POSTGRES_DB: ${DB_NAME:-admin_db}
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin123}
+      TZ: Asia/Shanghai
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - admin-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: admin-pro-pgadmin
+    restart: always
+    ports:
+      - '${PGADMIN_PORT:-5050}:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
+    depends_on:
+      - postgres
+    networks:
+      - admin-network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  admin-network:
+    driver: bridge
