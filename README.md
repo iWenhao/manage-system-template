@@ -1,21 +1,17 @@
 # Admin Pro - 全栈后台管理系统
 
-一套基于 Node.js 的全栈后台管理系统，提供 **Vue 3**、**Vue 2** 和 **Next.js** 三套前端实现，后端使用 **Express + Prisma + PostgreSQL**。
+一套基于 Node.js 的全栈后台管理系统，提供 **Vue 3**、**Vue 2**、**Angular** 和 **Next.js** 四套前端实现，后端使用 **Express + Prisma + PostgreSQL**。
 
 ## 项目结构
 
 ```
 manage-system-template/
 ├── docker/                      # Docker 配置
-│   ├── docker-compose.yml       # PostgreSQL + pgAdmin
-│   └── init.sql                 # 初始化 SQL
 ├── server/                      # 后端 API 服务（独立可用）
 ├── vue-admin/                   # Vue 3 前端（独立可用）
 ├── vue2-admin/                  # Vue 2 前端（独立可用）
+├── angular-admin/               # Angular 前端（独立可用）
 ├── next-admin/                  # Next.js 前端（独立可用）
-├── .editorconfig
-├── .gitignore
-├── commitlint.config.js
 ├── package.json
 └── README.md
 ```
@@ -25,8 +21,9 @@ manage-system-template/
 | 项目 | 技术栈 |
 |------|--------|
 | **后端** | Express + Prisma + PostgreSQL + JWT |
-| **Vue 3 前端** | Vue 3 + Element Plus + Pinia + Vue Router 4 |
-| **Vue 2 前端** | Vue 2 + Element UI + Vuex + Vue Router 3 |
+| **Vue 3 前端** | Vue 3 + Element Plus + Pinia + Vue Router 4 + Vite |
+| **Vue 2 前端** | Vue 2 + Element UI + Vuex + Vue Router 3 + Vite |
+| **Angular 前端** | Angular 17 + TinyNG（华为）|
 | **Next.js 前端** | Next.js 14 + Tailwind CSS + shadcn/ui + Zustand |
 
 ## 使用场景
@@ -35,6 +32,7 @@ manage-system-template/
 |------|------|
 | 新项目、需要现代技术栈 | Vue 3 + 后端 |
 | 简单项目、需要兼容旧浏览器 | Vue 2 + 后端 |
+| 企业级项目、TypeScript | Angular + 后端 |
 | 需要 SSR、React 技术栈 | Next.js + 后端 |
 | 只需要 API 服务 | 纯后端 |
 
@@ -140,6 +138,16 @@ pnpm dev
 ```
 
 Next.js 前端将运行在 http://localhost:3000
+
+### 6. 启动 Angular 前端
+
+```bash
+cd angular-admin
+pnpm install
+pnpm start
+```
+
+Angular 前端将运行在 http://localhost:5175
 
 ### 默认账号
 
