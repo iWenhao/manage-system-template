@@ -1,0 +1,14 @@
+{
+  "app": {
+    "title": "Admin Pro",
+    "shortTitle": "AP",
+    "description": "全栈后台管理系统",
+    "logo": "/logo.svg",
+    "favicon": "/favicon.ico"
+  },
+  "footer": {
+    "copyright": "Admin Pro",
+    "year": "2024",
+    "link": "https://github.com/iWenhao/manage-system-template"
+  }
+}

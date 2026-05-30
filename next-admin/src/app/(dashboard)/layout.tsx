@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth';
+import { appConfig } from '@/config/app';
 
 const menuItems = [
   { path: '/dashboard', label: '首页', icon: '🏠' },
@@ -60,7 +61,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* 侧边栏 */}
       <aside className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-gray-800 text-white transition-all duration-300 flex flex-col`}>
         <div className="p-4 flex-shrink-0">
-          <h1 className={`text-xl font-bold ${!sidebarOpen && 'hidden'}`}>Admin Pro</h1>
+          <h1 className={`text-xl font-bold ${!sidebarOpen && 'hidden'}`}>{appConfig.title}</h1>
         </div>
         <nav className="mt-4 flex-1 overflow-y-auto">
           {menuItems.map((item, index) => (

@@ -3,8 +3,8 @@
     <!-- 侧边栏 -->
     <div class="sidebar-container">
       <div class="logo-container">
-        <img src="@/assets/logo.svg" class="logo" alt="Logo" />
-        <span v-show="appStore.sidebar.opened" class="title">Admin Pro</span>
+        <img :src="appConfig.logo" class="logo" alt="Logo" />
+        <span v-show="appStore.sidebar.opened" class="title">{{ appConfig.title }}</span>
       </div>
       <el-scrollbar class="menu-scrollbar">
         <el-menu
@@ -77,6 +77,7 @@ import { useUserStore } from '@/stores/user';
 import { useAppStore } from '@/stores/app';
 import { usePermissionStore } from '@/stores/permission';
 import { useTagsStore } from '@/stores/tags';
+import { appConfig } from '@/config/app';
 import SidebarItem from './components/SidebarItem.vue';
 import Breadcrumb from './components/Breadcrumb.vue';
 import TagsView from './components/TagsView.vue';

@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
       <div class="title-container">
-        <h3 class="title">{{ $t('login.title') }}</h3>
+        <h3 class="title">{{ appConfig.title }}</h3>
       </div>
       <el-form-item prop="username">
         <el-input
@@ -35,6 +35,7 @@ import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/stores/user';
+import { appConfig } from '@/config/app';
 
 const router = useRouter();
 const userStore = useUserStore();

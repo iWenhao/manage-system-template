@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { appConfig } from '@/config/app';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-2xl w-96">
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-white">Admin Pro</h1>
+        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-white">{appConfig.title}</h1>
         <form onSubmit={handleLogin}>
           {error && (
             <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">{error}</div>
