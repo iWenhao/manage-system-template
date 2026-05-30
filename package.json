@@ -4,6 +4,7 @@
   "private": true,
   "description": "Admin Pro - 全栈后台管理系统",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev:server": "cd server && pnpm dev",
     "dev:vue": "cd vue-admin && pnpm dev",
     "dev:next": "cd next-admin && pnpm dev",

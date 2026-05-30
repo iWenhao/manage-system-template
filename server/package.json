@@ -4,6 +4,7 @@
   "description": "Admin Pro 后端 API 服务",
   "type": "module",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "tsx watch src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
