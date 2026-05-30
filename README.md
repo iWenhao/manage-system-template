@@ -1,61 +1,42 @@
 # Admin Pro - 全栈后台管理系统
 
-一套基于 Node.js 的全栈后台管理系统，提供 **Vue 3** 和 **Next.js** 两套前端实现，后端使用 **Express + Prisma + PostgreSQL**。
+一套基于 Node.js 的全栈后台管理系统，提供 **Vue 3**、**Vue 2** 和 **Next.js** 三套前端实现，后端使用 **Express + Prisma + PostgreSQL**。
 
 ## 项目结构
 
 ```
-admin-pro/
+manage-system-template/
 ├── docker/                      # Docker 配置
 │   ├── docker-compose.yml       # PostgreSQL + pgAdmin
-│   ├── init.sql                 # 初始化 SQL（表结构 + 种子数据）
-│   └── .env                     # 环境变量
-├── server/                      # 后端 API 服务
-│   ├── prisma/
-│   │   └── schema.prisma        # 数据库模型
-│   ├── src/
-│   │   ├── routes/              # API 路由
-│   │   ├── middleware/          # 中间件
-│   │   ├── services/            # 业务服务
-│   │   ├── utils/               # 工具函数
-│   │   └── app.ts               # 入口文件
-│   └── package.json
-├── vue-admin/                   # Vue 3 前端
-│   ├── src/
-│   │   ├── api/                 # API 请求
-│   │   ├── assets/              # 静态资源
-│   │   ├── components/          # 公共组件
-│   │   ├── layouts/             # 布局组件
-│   │   ├── locales/             # 国际化
-│   │   ├── router/              # 路由配置
-│   │   ├── stores/              # 状态管理
-│   │   ├── styles/              # 样式
-│   │   ├── utils/               # 工具函数
-│   │   └── views/               # 页面组件
-│   └── package.json
-├── next-admin/                  # Next.js 前端
-│   ├── src/
-│   │   ├── app/                 # 页面
-│   │   ├── components/          # 组件
-│   │   ├── lib/                 # 工具库
-│   │   └── stores/              # 状态管理
-│   └── package.json
-├── .editorconfig                # 编辑器配置
-├── .gitignore                   # Git 忽略
-├── commitlint.config.js         # 提交规范
-├── package.json                 # 根配置
-└── README.md                    # 项目说明
+│   └── init.sql                 # 初始化 SQL
+├── server/                      # 后端 API 服务（独立可用）
+├── vue-admin/                   # Vue 3 前端（独立可用）
+├── vue2-admin/                  # Vue 2 前端（独立可用）
+├── next-admin/                  # Next.js 前端（独立可用）
+├── .editorconfig
+├── .gitignore
+├── commitlint.config.js
+├── package.json
+└── README.md
 ```
 
 ## 技术栈
 
-| 层级 | 技术 |
+| 项目 | 技术栈 |
+|------|--------|
+| **后端** | Express + Prisma + PostgreSQL + JWT |
+| **Vue 3 前端** | Vue 3 + Element Plus + Pinia + Vue Router 4 |
+| **Vue 2 前端** | Vue 2 + Element UI + Vuex + Vue Router 3 |
+| **Next.js 前端** | Next.js 14 + Tailwind CSS + shadcn/ui + Zustand |
+
+## 使用场景
+
+| 场景 | 选择 |
 |------|------|
-| **数据库** | PostgreSQL 16 (Docker) |
-| **后端** | Express + Prisma + JWT + node-cron |
-| **Vue 前端** | Vue 3 + Element Plus + Pinia + Vue Router + vue-i18n |
-| **Next 前端** | Next.js 14 + Tailwind CSS + shadcn/ui + Zustand + next-intl |
-| **代码规范** | ESLint + Prettier + Commitlint + Husky |
+| 新项目、需要现代技术栈 | Vue 3 + 后端 |
+| 简单项目、需要兼容旧浏览器 | Vue 2 + 后端 |
+| 需要 SSR、React 技术栈 | Next.js + 后端 |
+| 只需要 API 服务 | 纯后端 |
 
 ## 功能特性
 
@@ -130,29 +111,31 @@ pnpm dev
 
 后端将运行在 http://localhost:3001
 
-### 3. 启动 Vue 前端
+### 3. 启动 Vue 3 前端
 
 ```bash
 cd vue-admin
-
-# 安装依赖
 pnpm install
-
-# 启动开发服务器
 pnpm dev
 ```
 
-Vue 前端将运行在 http://localhost:5173
+Vue 3 前端将运行在 http://localhost:5173
 
-### 4. 启动 Next.js 前端
+### 4. 启动 Vue 2 前端
+
+```bash
+cd vue2-admin
+pnpm install
+pnpm dev
+```
+
+Vue 2 前端将运行在 http://localhost:5174
+
+### 5. 启动 Next.js 前端
 
 ```bash
 cd next-admin
-
-# 安装依赖
 pnpm install
-
-# 启动开发服务器
 pnpm dev
 ```
 
@@ -175,10 +158,18 @@ pnpm build
 pnpm start
 ```
 
-### Vue 前端打包
+### Vue 3 前端打包
 
 ```bash
 cd vue-admin
+pnpm build
+# 产物在 dist/ 目录
+```
+
+### Vue 2 前端打包
+
+```bash
+cd vue2-admin
 pnpm build
 # 产物在 dist/ 目录
 ```
