@@ -9,7 +9,7 @@
 - **Vue Router 3** - 路由管理
 - **Vuex 3** - 状态管理
 - **Axios** - HTTP 请求
-- **Vue CLI** - 构建工具
+- **Vite** - 构建工具
 
 ## 项目结构
 
