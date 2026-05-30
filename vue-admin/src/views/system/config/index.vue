@@ -128,7 +128,9 @@ const handleUpdate = async (row: any) => {
 const handleDelete = (row?: any) => {
   const configIds = row ? [row.id] : ids.value;
   ElMessageBox.confirm('确认删除选中的参数?', '提示', { type: 'warning' }).then(async () => {
-    await deleteConfig(configIds);
+    for (const id of configIds) {
+      await deleteConfig(id);
+    }
     ElMessage.success('删除成功');
     getList();
   });
