@@ -2,11 +2,11 @@
   <div class="app-container">
     <!-- 搜索区域 -->
     <el-form :model="queryParams" ref="queryRef" :inline="true">
-      <el-form-item label="用户�? prop="username">
+      <el-form-item label="用户名" prop="username">
         <el-input v-model="queryParams.username" placeholder="请输入用户名" @keyup.enter="handleQuery" />
       </el-form-item>
-      <el-form-item label="状�? prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状�? clearable>
+      <el-form-item label="状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
           <el-option label="正常" :value="0" />
           <el-option label="停用" :value="1" />
         </el-select>
@@ -27,11 +27,11 @@
     <!-- 数据表格 -->
     <el-table v-loading="loading" :data="userList">
       <el-table-column type="index" width="50" />
-      <el-table-column prop="username" label="用户�? width="120" />
+      <el-table-column prop="username" label="用户名" width="120" />
       <el-table-column prop="nickname" label="昵称" width="120" />
       <el-table-column prop="dept.name" label="部门" width="120" />
-      <el-table-column prop="phone" label="手机�? width="120" />
-      <el-table-column prop="status" label="状�? width="80">
+      <el-table-column prop="phone" label="手机号" width="120" />
+      <el-table-column prop="status" label="状态" width="80">
         <template #default="scope">
           <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">
             {{ scope.row.status === 0 ? '正常' : '停用' }}
@@ -60,37 +60,37 @@
       @current-change="getList"
     />
 
-    <!-- 新增/修改对话�?-->
+    <!-- 新增/修改对话框 -->
     <el-dialog :title="dialogTitle" v-model="dialogVisible" width="600px">
       <el-form ref="userRef" :model="form" :rules="rules" label-width="80px">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="用户�? prop="username">
+            <el-form-item label="用户名" prop="username">
               <el-input v-model="form.username" placeholder="请输入用户名" :disabled="!!form.id" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="昵称" prop="nickname">
-              <el-input v-model="form.nickname" placeholder="请输入昵�? />
+              <el-input v-model="form.nickname" placeholder="请输入昵称" />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="!form.id">
             <el-form-item label="密码" prop="password">
-              <el-input v-model="form.password" type="password" placeholder="请输入密�? show-password />
+              <el-input v-model="form.password" type="password" placeholder="请输入密码" show-password />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="手机�? prop="phone">
+            <el-form-item label="手机号" prop="phone">
               <el-input v-model="form.phone" placeholder="请输入手机号" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入邮�? />
+              <el-input v-model="form.email" placeholder="请输入邮箱" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状�?>
+            <el-form-item label="状态">
               <el-radio-group v-model="form.status">
                 <el-radio :value="0">正常</el-radio>
                 <el-radio :value="1">停用</el-radio>
@@ -106,7 +106,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="备注">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入备�? />
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -152,8 +152,8 @@ const form = reactive({
 
 const rules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  nickname: [{ required: true, message: '请输入昵�?, trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密�?, trigger: 'blur' }],
+  nickname: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 };
 
 const getList = async () => {
@@ -185,7 +185,17 @@ const resetQuery = () => {
 
 const handleAdd = () => {
   dialogTitle.value = '新增用户';
-  Object.assign(form, { id: undefined, username: '', nickname: '', password: '', phone: '', email: '', status: 0, roleIds: [], remark: '' });
+  Object.assign(form, {
+    id: undefined,
+    username: '',
+    nickname: '',
+    password: '',
+    phone: '',
+    email: '',
+    status: 0,
+    roleIds: [],
+    remark: '',
+  });
   dialogVisible.value = true;
 };
 
@@ -197,7 +207,7 @@ const handleUpdate = async (row: any) => {
 };
 
 const handleDelete = (row: any) => {
-  ElMessageBox.confirm('确认删除该用�?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除该用户?', '提示', { type: 'warning' }).then(async () => {
     await deleteUser(row.id);
     ElMessage.success('删除成功');
     getList();

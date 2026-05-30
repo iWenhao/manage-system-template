@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" :inline="true">
       <el-form-item label="菜单名称">
-        <el-input v-model="queryParams.menuName" placeholder="请输入菜单名�? @keyup.enter="handleQuery" />
+        <el-input v-model="queryParams.menuName" placeholder="请输入菜单名称" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleQuery">搜索</el-button>
@@ -16,11 +16,19 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="menuList" row-key="id" :tree-props="{ children: 'children' }" default-expand-all>
+    <el-table
+      v-loading="loading"
+      :data="menuList"
+      row-key="id"
+      :tree-props="{ children: 'children' }"
+      default-expand-all
+    >
       <el-table-column prop="name" label="菜单名称" width="200" />
       <el-table-column prop="icon" label="图标" width="80">
         <template #default="scope">
-          <el-icon v-if="scope.row.icon"><component :is="scope.row.icon" /></el-icon>
+          <el-icon v-if="scope.row.icon">
+            <component :is="scope.row.icon" />
+          </el-icon>
         </template>
       </el-table-column>
       <el-table-column prop="sort" label="排序" width="80" />
@@ -34,9 +42,11 @@
       <el-table-column prop="path" label="路由路径" width="150" />
       <el-table-column prop="component" label="组件路径" width="200" />
       <el-table-column prop="permission" label="权限标识" width="150" />
-      <el-table-column prop="status" label="状�? width="80">
+      <el-table-column prop="status" label="状态" width="80">
         <template #default="scope">
-          <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">{{ scope.row.status === 0 ? '正常' : '停用' }}</el-tag>
+          <el-tag :type="scope.row.status === 0 ? 'success' : 'danger'">
+            {{ scope.row.status === 0 ? '正常' : '停用' }}
+          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="200">
@@ -53,7 +63,13 @@
         <el-row :gutter="20">
           <el-col :span="24">
             <el-form-item label="上级菜单">
-              <el-tree-select v-model="form.parentId" :data="menuTreeOptions" :props="{ label: 'name', value: 'id', children: 'children' }" check-strictly placeholder="请选择上级菜单" />
+              <el-tree-select
+                v-model="form.parentId"
+                :data="menuTreeOptions"
+                :props="{ label: 'name', value: 'id', children: 'children' }"
+                check-strictly
+                placeholder="请选择上级菜单"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -67,22 +83,22 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入菜单名�? />
+              <el-input v-model="form.name" placeholder="请输入菜单名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.type !== 2">
             <el-form-item label="路由路径">
-              <el-input v-model="form.path" placeholder="请输入路由路�? />
+              <el-input v-model="form.path" placeholder="请输入路由路径" />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.type === 1">
             <el-form-item label="组件路径">
-              <el-input v-model="form.component" placeholder="请输入组件路�? />
+              <el-input v-model="form.component" placeholder="请输入组件路径" />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.type !== 0">
             <el-form-item label="权限标识">
-              <el-input v-model="form.permission" placeholder="请输入权限标�? />
+              <el-input v-model="form.permission" placeholder="请输入权限标识" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -92,11 +108,11 @@
           </el-col>
           <el-col :span="12" v-if="form.type !== 2">
             <el-form-item label="图标">
-              <el-input v-model="form.icon" placeholder="请输入图标名�? />
+              <el-input v-model="form.icon" placeholder="请输入图标名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状�?>
+            <el-form-item label="状态">
               <el-radio-group v-model="form.status">
                 <el-radio :value="0">正常</el-radio>
                 <el-radio :value="1">停用</el-radio>
@@ -120,11 +136,14 @@ import { listMenu, getMenu, addMenu, updateMenu, deleteMenu } from '@/api/system
 
 const loading = ref(false);
 const menuList = ref<any[]>([]);
-const menuTreeOptions = ref([]);
+const menuTreeOptions = ref<any[]>([]);
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 
-const queryParams = reactive({ menuName: '' });
+const queryParams = reactive({
+  menuName: '',
+});
+
 const form = reactive({
   id: undefined as number | undefined,
   parentId: 0,
@@ -138,8 +157,9 @@ const form = reactive({
   visible: 0,
   status: 0,
 });
+
 const rules = {
-  name: [{ required: true, message: '请输入菜单名�?, trigger: 'blur' }],
+  name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
   type: [{ required: true, message: '请选择菜单类型', trigger: 'change' }],
 };
 
@@ -148,16 +168,34 @@ const getList = async () => {
   try {
     const res: any = await listMenu(queryParams);
     menuList.value = res.data;
-    menuTreeOptions.value = [{ id: 0, name: '主类�?, children: res.data }];
-  } finally { loading.value = false; }
+    menuTreeOptions.value = [{ id: 0, name: '主类目', children: res.data }];
+  } finally {
+    loading.value = false;
+  }
 };
 
 const handleQuery = () => getList();
-const resetQuery = () => { queryParams.menuName = ''; getList(); };
+
+const resetQuery = () => {
+  queryParams.menuName = '';
+  getList();
+};
 
 const handleAdd = (row?: any) => {
   dialogTitle.value = '新增菜单';
-  Object.assign(form, { id: undefined, parentId: row?.id || 0, name: '', path: '', component: '', icon: '', sort: 0, type: row ? 1 : 0, permission: '', visible: 0, status: 0 });
+  Object.assign(form, {
+    id: undefined,
+    parentId: row?.id || 0,
+    name: '',
+    path: '',
+    component: '',
+    icon: '',
+    sort: 0,
+    type: row ? 1 : 0,
+    permission: '',
+    visible: 0,
+    status: 0,
+  });
   dialogVisible.value = true;
 };
 
@@ -169,7 +207,7 @@ const handleUpdate = async (row: any) => {
 };
 
 const handleDelete = (row: any) => {
-  ElMessageBox.confirm('确认删除该菜�?', '提示', { type: 'warning' }).then(async () => {
+  ElMessageBox.confirm('确认删除该菜单?', '提示', { type: 'warning' }).then(async () => {
     await deleteMenu(row.id);
     ElMessage.success('删除成功');
     getList();
