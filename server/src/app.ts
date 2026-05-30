@@ -97,8 +97,8 @@ app.listen(PORT, () => {
 ║                                                          ║
 ║   Admin Pro Server                                       ║
 ║                                                          ║
-║   Local:   http://localhost:${PORT}                        ║
-║   Health:  http://localhost:${PORT}/api/health              ║
+║   Local:   http://localhost:${PORT}                      ║
+║   Health:  http://localhost:${PORT}/api/health           ║
 ║                                                          ║
 ╚══════════════════════════════════════════════════════════╝
   `);
